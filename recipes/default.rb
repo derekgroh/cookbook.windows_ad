@@ -50,6 +50,6 @@ else
       action :install
     end
   end
-  Chef::Log.warn('This version of Windows Server may be missing some providei
+  Chef::Log.warn('This version of Windows Server may be missing some provider
                   support. Help us out by submitting a pull request.')
 end
