@@ -5,34 +5,37 @@ driver:
 provisioner:
   name: chef_solo
 
+verifier:
+  name: inspec
+
 platforms:
-  - name: win2008r2
+  - name: windows_2008_r2
     driver_config:
-      box_url: d:\cookbooks\packer-windows\windows_2008_r2_virtualbox.box
       communicator: winrm
     transport:
       name: winrm
-#  - name: win2008r2core
-#    driver_config:
-#      box_url: d:\cookbooks\packer-windows\windows_2008_r2_core_virtualbox.box
-#      communicator: winrm
-#    transport:
-#      name: winrm
-#  - name: win2012
-#    driver_config:
-#      box_url: d:\cookbooks\packer-windows\windows_2012_virtualbox.box
-#      communicator: winrm
-#    transport:
-#      name: winrm
-  - name: win2012r2
+  - name: windows_2008_r2_core
     driver_config:
-      box_url: d:\cookbooks\packer-windows\windows_2012_r2_virtualbox.box
       communicator: winrm
     transport:
       name: winrm
-  - name: win2012r2core
+  - name: windows_2012
     driver_config:
-      box_url: d:\cookbooks\packer-windows\windows_2012_r2_core_virtualbox.box
+      communicator: winrm
+    transport:
+      name: winrm
+  - name: windows_2012_core
+    driver_config:
+      communicator: winrm
+    transport:
+      name: winrm      
+  - name: windows_2012_r2
+    driver_config:
+      communicator: winrm
+    transport:
+      name: winrm
+  - name: windows_2012_r2_core
+    driver_config:
       communicator: winrm
     transport:
       name: winrm
@@ -40,8 +43,12 @@ platforms:
 suites:
   - name: default
     run_list:
-
       - recipe[test_windows_ad::setup_dc]
-      - recipe[test_windows_ad::ad_objects]
-
     attributes:
+  - name: ad-objects
+    run_list:
+      - recipe[test_windows_ad::setup_dc]
+      - recipe[test_windows_ad::ou]
+      - recipe[test_windows_ad::group]
+
+
